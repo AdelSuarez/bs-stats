@@ -1,7 +1,4 @@
 import requests
-
-
-
 class BSapi:
     def __init__(self):
         self.base_url = "https://api.brawlstars.com/v1/players/%23"
@@ -36,6 +33,6 @@ class BSapi:
         if response.status_code == 200:
             icons_data = response.json()
             # Aquí puedes trabajar con los datos de los íconos
-            print(icons_data)
+            return icons_data
         else:
             print(f"Error al obtener íconos. Código de estado: {response.status_code}")

@@ -63,6 +63,11 @@ def user_profile() -> rx.Component:
             rx.flex(
 
                 rx.box(
+                    rx.cond(
+                        State.is_loading,
+                        rx.chakra.spinner(color="blue", size="lg"),
+                        rx.avatar(src=State.url_icon,fallback="RX", size="5"),
+                    ),
                     rx.heading(f'{State.player_info["name"]} | {State.player_info["trophies"]}', size="4"),
                     rx.flex(
                         
@@ -131,8 +136,9 @@ def user_profile() -> rx.Component:
 def index() -> rx.Component:
     return rx.vstack(
             rx.heading(
-                "Estadisticas BS", 
+                "Estadisticas BS",
                 size="9",
+                # font_family= "Lilita One",
                 style={
                     "margin":"20px"
                 }
@@ -154,5 +160,7 @@ def index() -> rx.Component:
 
 
 
-app = rx.App(style=style.global_style)
+app = rx.App(style=style.global_style,stylesheets=[
+ "https://fonts.googleapis.com/css2?family=Lilita+One&display=swap",
+ ],)
 app.add_page(index)

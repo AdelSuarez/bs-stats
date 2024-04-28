@@ -5,5 +5,6 @@ WHITE: int = "#ffffff"
 
 
 global_style = {
+    "font_family": "Lilita One",
     "background_color": GREY,
 }
