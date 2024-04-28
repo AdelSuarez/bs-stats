@@ -1,38 +1,11 @@
 import reflex as rx
-from api.api_bs import BSapi, api_key
 from style import style
+from src.State import State
 
 # TODO: Si es posible colocar como variable de entorno la api_key
 scott = "CQ9JCL02"
 adel = "V2Y98VYQ"
 ivanna = "20CPPGUCR2"
-
-
-# TODO: Enlazar el codigo con la conexion a la api
-class State(rx.State):
-    input_value: str = ''  # Almacena el valor ingresado
-    display_value: str = '' # Almacena el valor a mostrar en el heading
-    is_visible: bool = False
-    player_info: dict = {};
-    list_brawlers: list[dict] = []
-
-
-    def set_input_value(self, value: str):
-        # Este método actualiza input_value cada vez que el usuario escribe en el input
-        self.input_value = value
-
-    def update_display_value(self):
-        self.display_value = self.input_value
-        bs_api = BSapi(api_key)
-        self.player_info = bs_api.get_player_info(self.display_value)
-        if self.player_info != {}:
-            self.is_visible = True
-            print(self.player_info["brawlers"] )
-            # for brawler in self.player_info["brawlers"]:
-            #     print(brawler)
-            #     self.list_brawlers.append(brawler)
-            # print(State.list_brawlers),
-
 
 
 # TODO: mejorar el codigo si lo necesita con respecto a la clase State
@@ -114,8 +87,8 @@ def user_profile() -> rx.Component:
                     display="flex",  # Establece el tipo de display como Flex para habilitar Flexbox
                     flex_direction="column",
                 ),
-                [rx.box(
-                    card_brawler_info(), 
+                rx.box(
+                    # card_brawler_info(), 
                     #     State.list_brawlers["brawlers"],print()
                     # ),
                     # rx.heading(
@@ -136,7 +109,7 @@ def user_profile() -> rx.Component:
                     margin=10,
                     box_shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
 
-                ) for bra in State.list_brawlers["brawlers"]],
+                ),
 
                 width="90%",
                 height= "90%",
