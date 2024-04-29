@@ -10,34 +10,63 @@ ivanna = "20CPPGUCR2"
 
 # TODO: mejorar el codigo si lo necesita con respecto a la clase State
 def action_bar() -> rx.Component:
-    return rx.hstack(
-        rx.input(
-            name="input",
-            placeholder="Buscar Perfil...",
-            on_change=State.set_input_value,
-            size="3",
-            radius="large"
+    return rx.chakra.hstack(
+        rx.flex(
+            rx.avatar(fallback="#", size="3"),
+            rx.chakra.form_control(
+                rx.input(
+                    name="input",
+                    placeholder="Buscar Perfil...",
+                    on_blur=State.set_input_value,
+                    size="3",
+                    radius="large",
+                    style={"width": "200px"}
+                    ),
+                rx.cond(
+                        State.message_input,
+                        rx.chakra.form_error_message(
+                            "Introduce el Codigo",
+                            style={"fontSize": "15px", "margin": "0px", "padding-left":"15px"}
+                        ),
+                        rx.chakra.form_helper_text(
+                            "Codigo de jugador",
+                            style={"fontSize": "15px", "margin": "0px", "padding-left":"15px"}
+                            ),
+                    ),
+                is_invalid=State.message_input,
+                is_required=True,
             ),
-        rx.button(
-            "Buscar",
-            on_click=State.update_display_value,
-            size='3' 
+
+            rx.button(
+                "Buscar",
+                on_click=State.update_display_value,
+                size='3' 
             ),
+            spacing="2",
+        )
     )
 
-def card_stats(title:str, data:str) -> rx.Component:
+def card_stats(title:str, data:str, image:str) -> rx.Component:
     return rx.card(
                 rx.flex(
-                    rx.heading(title, size="4"),
-                    rx.text(State.player_info[data]),
-                    direction="column",
+
+                    rx.image(src=f"/{image}", width="50px", height="50px"),
+                    rx.flex(
+                        rx.heading(title, size="4", font_family= "Lilita One",font_weight="300",),
+                        rx.text(State.player_info[data], font_family= "Lilita One",font_weight="300",),
+                        direction="column",
+                        justify="center",
+                        align_items="center",
+                        width="100%",
+                        height="100%",
+                    ),
                     justify="center",
-                    align_items="center",
-                    width="100%",
-                    height="100%",
-                ),
-                margin=10,
+                    spacing="2",
+
+                )
+                
             ),
+
 
 def card_brawler_info(brawler: dict) -> rx.Component:
     return rx.card(
@@ -61,25 +90,26 @@ def user_profile() -> rx.Component:
     return rx.cond(
         State.is_visible,
             rx.flex(
-
                 rx.box(
-                    rx.cond(
-                        State.is_loading,
-                        rx.chakra.spinner(color="blue", size="lg"),
-                        rx.avatar(src=State.url_icon,fallback="RX", size="5"),
+                    rx.avatar(src=State.url_icon_player, fallback="RX", size="5"),
+                    rx.flex(
+                        rx.heading(f'{State.player_info["name"]} | {State.player_info["trophies"]}', size="4",font_family= "Lilita One",font_weight="300",),
+                        rx.image(src=f"/trophy.png", width="20px", height="20px"),
+                        justify="center",
+                        spacing="1",
                     ),
-                    rx.heading(f'{State.player_info["name"]} | {State.player_info["trophies"]}', size="4"),
+
                     rx.flex(
                         
-                        card_stats("MÁXIMO DE TROFEOS", "highestTrophies"),
-                        card_stats("VICTORIAS 3 VS 3", "3vs3Victories"),
-                        card_stats("VICTORIAS EN SOLITARIO", "soloVictories"),
-                        card_stats("VICTORIAS EN DÚO", "duoVictories"),
+                        card_stats("MÁXIMO DE TROFEOS", "highestTrophies", "Ranking.webp"),
+                        card_stats("VICTORIAS 3 VS 3", "3vs3Victories", "3v3.png"),
+                        card_stats("VICTORIAS EN SOLITARIO", "soloVictories","Showdown.webp"),
+                        card_stats("VICTORIAS EN DÚO", "duoVictories","Duo-Showdown.webp"),
 
                         width="90%",
-
-                        align="center",
+                        align="center", 
                         justify="center",
+                        spacing="2",
 
                     ),
                     width="90%",
@@ -93,19 +123,7 @@ def user_profile() -> rx.Component:
                     flex_direction="column",
                 ),
                 rx.box(
-                    # card_brawler_info(), 
-                    #     State.list_brawlers["brawlers"],print()
-                    # ),
-                    # rx.heading(
-                    #     State.player_info["name"], from typing import List, Dict
-
-                    #     size="4", 
-                    #     ),
-                    # rx.heading(                    State.list_brawlers["brawlers"].foreach( lambda b: print(b)),
-
-                    #     State.player_info["trophies"], 
-                    #     size="4", 
-                    #     ),
+ 
                     width="90%",
                     height= "350%",
                     bg=style.WHITE,
@@ -116,7 +134,7 @@ def user_profile() -> rx.Component:
 
                 ),
 
-                width="90%",
+                width="80%",
                 height= "90%",
                 direction="column",
                 align="center",
@@ -125,9 +143,20 @@ def user_profile() -> rx.Component:
                 
                 # bg="red",
             ),
+            rx.cond(
+                State.message_user_void,
+                rx.box(
+                    rx.heading('Jugador no existe', size="6",font_family= "Lilita One",font_weight="300",),
+                    bg="#E6B0AA",
+                    border_radius="10px",
+                    width="30%",
+                    margin="100px",
+                    padding="20px",
+                    text_align="center",
+                    box_shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
 
-
-            
+                )
+            )
         )
 
 
@@ -138,7 +167,8 @@ def index() -> rx.Component:
             rx.heading(
                 "Estadisticas BS",
                 size="9",
-                # font_family= "Lilita One",
+                font_family= "Lilita One",
+                font_weight="300",
                 style={
                     "margin":"20px"
                 }
@@ -152,6 +182,7 @@ def index() -> rx.Component:
                 align="center",
 
             ),
+ 
         user_profile(),
         align="center",
         height="100vh", 

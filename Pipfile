@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 reflex = "*"
+aiohttp = "*"
 
 [dev-packages]
 
