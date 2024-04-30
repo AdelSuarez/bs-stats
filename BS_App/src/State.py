@@ -1,5 +1,5 @@
 import reflex as rx
-from api.api_bs import BSapi
+from BS_App.api.api_bs import BSapi
 
 
 class State(rx.State):
@@ -10,7 +10,6 @@ class State(rx.State):
     url_icon_player: str = '' # Icono del jugador
     message_input:bool = False
     message_user_void:bool = False
-
 
 
     def set_input_value(self, value: str):
@@ -39,7 +38,8 @@ class State(rx.State):
             self.is_visible = True
         elif self.player_info == "void":
             self.is_visible = False
-            self.message_user_void = True
+            if not (self.message_input):
+                self.message_user_void = True
         
 
  

@@ -1,5 +1,6 @@
 import aiohttp
-import requests
+import BS_App.constants as constants
+
 class BSapi:
     def __init__(self):
         self.base_url = "https://api.brawlstars.com/v1/players/%23"
