@@ -1,6 +1,7 @@
 import reflex as rx
 from BS_App.style import style, colors
 from BS_App.src.State import State
+from BS_App.views.header import header
 
 # TODO: Si es posible colocar como variable de entorno la api_key
 scott = "CQ9JCL02"
@@ -171,14 +172,7 @@ def user_profile() -> rx.Component:
 #TODO: Mejorar la interfaz y los componentes para que no se vean en una sola funcion
 def index() -> rx.Component:
     return rx.vstack(
-            rx.heading(
-                "Estadisticas BS",
-                size="9",
-                font_family= "Lilita One",
-                font_weight="300",
-                margin="20px"
-                ),
-            rx.divider(width="90%"),
+            header(),
             rx.vstack(
                 action_bar(),
                 margin="10px",
