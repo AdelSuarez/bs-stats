@@ -10,12 +10,16 @@ MAX_WIDTH = "1200px"
 
 # Size
 class Size(Enum):
+    ZERO = "0px !important"
     DEFAULT = "1em"
+    MEDIUM = "2em"
+    VERY_BIG = "16em"
 
 # Spacing
 class Spacing(Enum):
     ZERO = "0"
     VERY_SMALL = "1"
+    MEDIUM_SMALL= "2"
     SMALL = "3"
     DEFAULT = "4"
     LARGE = "5"
@@ -38,3 +42,8 @@ BASE_STYLE = {
         "font_family": Font.DEFAULT.value,
     }
 }
+
+form_helper_style = dict(
+    margin=Size.ZERO.value,
+    padding_left=Size.DEFAULT.value,
+)

@@ -1,55 +1,15 @@
 import reflex as rx
 from BS_App.style import style, colors
-from BS_App.src.State import State
+from BS_App.state.State import State
+from BS_App.components.message import message
 from BS_App.views.header import header
+from BS_App.views.search_bar import search_bar
 
 # TODO: Si es posible colocar como variable de entorno la api_key
 scott = "CQ9JCL02"
 adel = "V2Y98VYQ"
 ivanna = "20CPPGUCR2"
 
-
-# TODO: mejorar el codigo si lo necesita con respecto a la clase State
-def action_bar() -> rx.Component:
-    return rx.chakra.hstack(
-        rx.flex(
-            rx.avatar(fallback="#", size="3"),
-            rx.chakra.form_control(
-                rx.input(
-                    name="input",
-                    placeholder="Buscar Perfil...",
-                    on_blur=State.set_input_value,
-                    size="3",
-                    radius="large",
-                    width= "200px"
-                    ),
-                rx.cond(
-                        State.message_input,
-                        rx.chakra.form_error_message(
-                            "Introduce el Codigo",
-                            fontSise='15',
-                            margin='0px',
-                            padding_left='15px',
-                        ),
-                        rx.chakra.form_helper_text(
-                            "Codigo de jugador",
-                            fontSise='15',
-                            margin='0px',
-                            padding_left='15px',
-                            ),
-                    ),
-                is_invalid=State.message_input,
-                is_required=True,
-            ),
-
-            rx.button(
-                "Buscar",
-                on_click=State.update_display_value,
-                size='3' 
-            ),
-            spacing="2",
-        )
-    )
 
 def card_stats(title:str, data:str, image:str) -> rx.Component:
     return rx.card(
@@ -154,6 +114,7 @@ def user_profile() -> rx.Component:
             ),
             rx.cond(
                 State.message_user_void,
+                # message("Error con la api"),
                 rx.box(
                     rx.heading('Jugador no existe', size="6",font_family= "Lilita One",font_weight="300",),
                     bg="#E6B0AA",
@@ -164,8 +125,8 @@ def user_profile() -> rx.Component:
                     text_align="center",
                     box_shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
 
-                )
-            )
+                ),
+            ),
         )
 
 
@@ -173,18 +134,12 @@ def user_profile() -> rx.Component:
 def index() -> rx.Component:
     return rx.vstack(
             header(),
-            rx.vstack(
-                action_bar(),
-                margin="10px",
-                align="center",
-
-            ),
- 
-        user_profile(),
-        align="center",
-        height="100vh", 
-        width="100vw", 
-    )   
+            search_bar(),
+            user_profile(),
+            align="center",
+            height="100vh", 
+            width="100vw", 
+        )   
 
 
 

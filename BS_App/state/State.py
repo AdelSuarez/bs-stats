@@ -1,5 +1,5 @@
 import reflex as rx
-from BS_App.api.api_bs import BSapi
+from BS_App.api.BsApi import BsApi
 
 
 class State(rx.State):
@@ -10,6 +10,8 @@ class State(rx.State):
     url_icon_player: str = '' # Icono del jugador
     message_input:bool = False
     message_user_void:bool = False
+    message_error_api:bool = False
+
 
 
     def set_input_value(self, value: str):
@@ -27,10 +29,10 @@ class State(rx.State):
     async def update_display_value(self):
         self.is_void()
         self.display_value = self.input_value
-        self.player_info = await BSapi().get_player_info(self.display_value)
+        self.player_info = await BsApi().get_player_info(self.display_value)
         if isinstance(self.player_info, rx.state.MutableProxy):
             # Todos los iconos de una api de terceros 
-            icons = await BSapi().get_icons()
+            icons = await BsApi().get_icons()
             for icon in icons["player"]:
                 # Verificamos el icono
                 if str(self.player_info["icon"]["id"]) == str(icon):
@@ -40,6 +42,10 @@ class State(rx.State):
             self.is_visible = False
             if not (self.message_input):
                 self.message_user_void = True
+        # elif self.player_info == "error_api":
+        #     self.is_visible == False
+        #     if not (self.message_input):
+        #         self.message_error_api = True
         
 
  
