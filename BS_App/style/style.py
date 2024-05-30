@@ -1,7 +1,7 @@
 import reflex as rx
 from enum import Enum
 from .colors import Color
-from .fonts import Font
+from .fonts import Font , FontWeight
 
 
 # Constants
@@ -11,8 +11,11 @@ MAX_WIDTH = "1200px"
 # Size
 class Size(Enum):
     ZERO = "0px !important"
+    SMALL = "0.5em"
     DEFAULT = "1em"
-    MEDIUM = "2em"
+    MEDIUM = "1.5em"
+    BIG = "2em"
+    MEDIUM_BIG = "3em"
     VERY_BIG = "16em"
 
 # Spacing
@@ -23,8 +26,9 @@ class Spacing(Enum):
     SMALL = "3"
     DEFAULT = "4"
     LARGE = "5"
-    BIG = "6"
-    MEDIUM_BIG = "7"
+    MEDIUM_LARGE = "6"
+    BIG = "7"
+    MEDIUM_BIG = "8"
     VERY_BIG = "9"
 
 # Styles
@@ -40,6 +44,11 @@ BASE_STYLE = {
     },
     rx.button: {
         "font_family": Font.DEFAULT.value,
+        "cursor":"pointer",
+    },
+    rx.text: {
+        "font_family": Font.DEFAULT.value,
+        "font_weight": FontWeight.LIGHT.value,
     }
 }
 

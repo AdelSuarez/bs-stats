@@ -2,33 +2,16 @@ import reflex as rx
 from BS_App.style import style, colors
 from BS_App.state.State import State
 from BS_App.components.message import message
+from BS_App.components.card_stats import card_stats
 from BS_App.views.header import header
 from BS_App.views.search_bar import search_bar
+from BS_App.views.profile import profile
 
 # TODO: Si es posible colocar como variable de entorno la api_key
 scott = "CQ9JCL02"
 adel = "V2Y98VYQ"
 ivanna = "20CPPGUCR2"
-
-
-def card_stats(title:str, data:str, image:str) -> rx.Component:
-    return rx.card(
-                rx.hstack(
-                    rx.image(src=f"/{image}", width="50px", height="50px"),
-                    rx.vstack(
-                        rx.heading(title, size="4", font_family= "Lilita One",font_weight="300",),
-                        rx.text(State.player_info[data], font_family= "Lilita One",font_weight="300",),
-                        justify="center",
-                        align_items="center",
-                        width="100%",
-                        height="100%",
-                    ),
-                    justify="center",
-                    spacing="2",
-
-                )
-                
-            ),
+TOP1="PR9U2JL"
 
 
 def card_brawler_info(brawler: dict) -> rx.Component:
@@ -49,99 +32,16 @@ def card_brawler_info(brawler: dict) -> rx.Component:
             ),
 
 
-def user_profile() -> rx.Component:
-    return rx.cond(
-        State.is_visible,
-            rx.vstack(
-                rx.vstack(
-                    rx.avatar(src=State.url_icon_player, fallback="RX", size="5"),
-                    rx.hstack(
-                        rx.heading(f'{State.player_info["name"]} | {State.player_info["trophies"]}', size="4",font_family= "Lilita One",font_weight="300",),
-                        rx.image(src=f"/trophy.png", width="20px", height="20px"),
-                        justify="center",
-                        spacing="1",
-                    ),
 
-                    rx.flex(
-                        
-                        card_stats("MÁXIMO DE TROFEOS", "highestTrophies", "Ranking.webp"),
-                        card_stats("VICTORIAS 3 VS 3", "3vs3Victories", "3v3.png"),
-                        card_stats("VICTORIAS EN SOLITARIO", "soloVictories","Showdown.webp"),
-                        card_stats("VICTORIAS EN DÚO", "duoVictories","Duo-Showdown.webp"),
-
-                        # width="90%",
-                        align="center", 
-                        justify="center",
-                        spacing="2",
-
-                    ),
-                    # width="90%",
-                    # height="100%",
-                    bg=colors.Color.WHITE.value,
-                    border_radius="15px",
-                    padding=10,
-                    box_shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-                    align_items="center",  # Alinea los elementos horizontalmente al centro
-                    # display="flex",  # Establece el tipo de display como Flex para habilitar Flexbox
-                ),
-                rx.vstack(
-                    rx.vstack(
-                        rx.heading(f'BRAWLERS', size="4",font_family= "Lilita One",font_weight="300",),
-                        align="center",
-                        height="100%", 
-                        width="100%", 
-                    ),
- 
-                    # width="100%",
-                    # height= "350%",
-                    bg=colors.Color.WHITE.value,
-                    border_radius="15px",
-                    padding=10,
-                    margin=10,
-                    box_shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-
-                ),
-
-                width="100%",
-                height= "100%",
-                direction="column",
-                align="center",
-                # justify="center",
-
-                # bg="red",
-                max_width=style.MAX_WIDTH,
-                # spacing=2,
-            ),
-            rx.cond(
-                State.message_user_void,
-                # message("Error con la api"),
-                rx.box(
-                    rx.heading('Jugador no existe', size="6",font_family= "Lilita One",font_weight="300",),
-                    bg="#E6B0AA",
-                    border_radius="10px",
-                    width="30%",
-                    margin="100px",
-                    padding="20px",
-                    text_align="center",
-                    box_shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
-
-                ),
-            ),
-        )
-
-
-#TODO: Mejorar la interfaz y los componentes para que no se vean en una sola funcion
 def index() -> rx.Component:
     return rx.vstack(
             header(),
             search_bar(),
-            user_profile(),
+            profile(),
             align="center",
             height="100vh", 
             width="100vw", 
         )   
-
-
 
 app = rx.App(
     stylesheets=style.STYLESHEETS,

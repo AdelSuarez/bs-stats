@@ -1,7 +1,7 @@
 from enum import Enum
 
 class Color(Enum):
-    ACCENT = "#fffff"
+    ACCENT = "#D6DBDF"
     PRIMARY = "#FFFFFF"
     SECONDARY = "#ffffff",
     TERTIARY = "#ffffff"
