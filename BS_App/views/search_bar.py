@@ -1,11 +1,17 @@
 import reflex as rx
 from BS_App.state.State import State
+from BS_App.style.colors import Color
 from BS_App.style.style import form_helper_style, Spacing, Size
 
 
 def search_bar() -> rx.Component:
     return rx.hstack(
-            rx.avatar(fallback="#", size=Spacing.SMALL.value),
+            rx.avatar(
+                    fallback="#", 
+                    size=Spacing.SMALL.value,
+                    # bg=Color.TERTIARY.value,
+                    color_scheme=Color.PRIMARY.value,
+                ),
             rx.chakra.form_control(
                 rx.input(
                     name="input",

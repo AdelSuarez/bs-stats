@@ -1,8 +1,6 @@
 import reflex as rx
-from BS_App.style import style, colors
-from BS_App.state.State import State
-from BS_App.components.message import message
-from BS_App.components.card_stats import card_stats
+from BS_App.style import style
+from BS_App.components.navbar import navbar
 from BS_App.views.header import header
 from BS_App.views.search_bar import search_bar
 from BS_App.views.profile import profile
@@ -35,7 +33,7 @@ def card_brawler_info(brawler: dict) -> rx.Component:
 
 def index() -> rx.Component:
     return rx.vstack(
-            header(),
+            navbar(),
             search_bar(),
             profile(),
             align="center",
