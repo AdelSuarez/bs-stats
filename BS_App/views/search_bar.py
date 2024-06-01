@@ -1,45 +1,52 @@
 import reflex as rx
 from BS_App.state.State import State
 from BS_App.style.colors import Color
-from BS_App.style.style import form_helper_style, Spacing, Size
+from BS_App.style.style import Size
+from BS_App.style.style import form_helper_style,btn_style ,Spacing, Size
 
 
 def search_bar() -> rx.Component:
     return rx.hstack(
-            rx.avatar(
-                    fallback="#", 
-                    size=Spacing.SMALL.value,
-                    # bg=Color.TERTIARY.value,
-                    color_scheme=Color.PRIMARY.value,
-                ),
-            rx.chakra.form_control(
-                rx.input(
-                    name="input",
-                    placeholder="Buscar Perfil...",
-                    on_blur=State.set_input_value,
-                    size=Spacing.SMALL.value,
-                    radius="large",
-                    width= Size.VERY_BIG.value,
-                    ),
-                rx.cond(
-                        State.message_input,
-                        rx.chakra.form_error_message(
-                            "Introduce el Codigo",
-                            style=form_helper_style,
-                        ),
-                        rx.chakra.form_helper_text(
-                            "Codigo de jugador",
-                            style=form_helper_style,
-                            ),
-                    ),
-                is_invalid=State.message_input,
-                is_required=True,
-            ),
+            rx.hstack(
 
+                rx.box(
+                    "#",
+                    bg=Color.SECONDARY.value,
+                    padding=Size.SMALL.value,
+                    border_radius="10px 0 0 10px",
+                ),
+                rx.chakra.form_control(
+                    rx.chakra.input(
+                        name="input",
+                        placeholder="Buscar Perfil...",
+                        on_blur=State.set_input_value,
+                        size="md",
+                        border_radius="0 10px 10px 0",
+                        focus_border_color=Color.PRIMARY.value,
+                        width= Size.VERY_BIG.value,
+                        ),
+                    rx.cond(
+                            State.message_input,
+                            rx.chakra.form_error_message(
+                                "Introduce el Codigo",
+                                style=form_helper_style,
+                            ),
+                            rx.chakra.form_helper_text(
+                                "Codigo de jugador",
+                                style=form_helper_style,
+                                ),
+                        ),
+                    is_invalid=State.message_input,
+                    is_required=True,
+                ),
+                justify="center",
+                spacing=Spacing.ZERO.value,
+            ),
             rx.button(
                 "Buscar",
                 on_click=State.update_display_value,
-                size=Spacing.SMALL.value, 
+                size="3",
+                style=btn_style,
             ),
 
             margin=Size.DEFAULT.value

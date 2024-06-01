@@ -6,6 +6,7 @@ from .fonts import Font , FontWeight
 
 # Constants
 MAX_WIDTH = "1200px"
+BOX_SHADOW = "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
 
 
 # Size
@@ -55,4 +56,11 @@ BASE_STYLE = {
 form_helper_style = dict(
     margin=Size.ZERO.value,
     padding_left=Size.DEFAULT.value,
+)
+
+btn_style = dict(
+    bg=Color.PRIMARY.value,
+    _hover={
+        "bg":Color.HOVER_BTN
+    },
 )

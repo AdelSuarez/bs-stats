@@ -1,9 +1,10 @@
 import reflex as rx
 from BS_App.state.State import State
 from BS_App.components.card_stats import card_stats
+from BS_App.components.stats_profile import stats_profile
 from BS_App.style.colors import Color
 from BS_App.style import style
-from BS_App.style.style import Spacing, Size
+from BS_App.style.style import Spacing, Size, BOX_SHADOW
 from BS_App.style.colors import Color
 
 def profile() -> rx.Component:
@@ -13,7 +14,11 @@ def profile() -> rx.Component:
                 rx.vstack(
                     rx.hstack(
                         rx.vstack(
-                            rx.avatar(src=State.url_icon_player, fallback="RX", size="8"),
+                            rx.avatar(
+                                src=State.url_icon_player, 
+                                fallback="RX", 
+                                size="8"
+                            ),
                             rx.chakra.span(
                                 f'{State.player_info["tag"]}',
                                 color=Color.ACCENT.value,
@@ -28,23 +33,8 @@ def profile() -> rx.Component:
                                 
                             ),
                             rx.vstack(
-
-                                rx.hstack(
-                                    rx.image(src=f"/trophy.png", width=Size.MEDIUM.value, height=Size.MEDIUM.value),
-                                    rx.chakra.span(
-                                        f'{State.player_info["trophies"]}',
-                                        font_size=Size.DEFAULT.value,
-                                    ),
-                                    spacing=Spacing.VERY_SMALL.value,
-                                ),
-                                rx.hstack(
-                                    rx.image(src=f"/Info.webp", width=Size.MEDIUM.value, height=Size.MEDIUM.value),
-                                    rx.chakra.span(
-                                        f'EXP: {State.player_info["expLevel"]}',
-                                        font_size=Size.DEFAULT.value,
-                                    ),
-                                    spacing=Spacing.VERY_SMALL.value,
-                                ),
+                                stats_profile("/trophy.png",f'{State.player_info["trophies"]}'),
+                                stats_profile("/Info.webp", f'EXP: {State.player_info["expLevel"]}'),
                                 spacing=Spacing.VERY_SMALL.value
                             ),
                             spacing=Spacing.ZERO.value,
@@ -66,8 +56,8 @@ def profile() -> rx.Component:
                     ),
                     bg=Color.WHITE.value,
                     border_radius=Size.SMALL.value,
-                    padding=10,
-                    box_shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                    padding=Size.SMALL.value,
+                    box_shadow=BOX_SHADOW,
                     align_items="center",  # Alinea los elementos horizontalmente al centro
                 ),
 
@@ -89,7 +79,7 @@ def profile() -> rx.Component:
                     border_radius="15px",
                     padding=10,
                     margin=10,
-                    box_shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                    box_shadow=BOX_SHADOW,
 
                 ),
 
@@ -106,6 +96,8 @@ def profile() -> rx.Component:
             rx.cond(
                 State.message_user_void,
                 # message("Error con la api"),
+                # message("Error con la api"),
+
                 rx.box(
                     rx.heading('Jugador no existe', size="6",font_family= "Lilita One",font_weight="300",),
                     bg="#E6B0AA",
@@ -114,7 +106,7 @@ def profile() -> rx.Component:
                     margin="100px",
                     padding="20px",
                     text_align="center",
-                    box_shadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+                    box_shadow=BOX_SHADOW,
 
                 ),
             ),

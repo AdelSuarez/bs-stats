@@ -38,11 +38,13 @@ class State(rx.State):
                 if str(self.player_info["icon"]["id"]) == str(icon):
                     self.url_icon_player = icons["player"][icon]["imageUrl"]
             self.is_visible = True
+
         elif self.player_info == "void":
             self.is_visible = False
             if not (self.message_input):
                 self.message_user_void = True
-        # elif self.player_info == "error_api":
+        elif self.player_info == "error_api":
+            print("error")
         #     self.is_visible == False
         #     if not (self.message_input):
         #         self.message_error_api = True

@@ -7,7 +7,11 @@ from BS_App.style.colors import Color
 def card_stats(title:str, data:str, image:str) -> rx.Component:
     return rx.box(
                 rx.hstack(
-                    rx.image(src=f"/{image}", width="auto", height="50px"),
+                    rx.image(
+                        src=f"/{image}", 
+                        width="auto", 
+                        height="50px"
+                    ),
                     rx.vstack(
                         rx.text(
                             title, 
@@ -23,5 +27,5 @@ def card_stats(title:str, data:str, image:str) -> rx.Component:
                 ),
                 padding=Size.SMALL.value,
                 border_radius=Size.SMALL.value,
-                bg=Color.BG.value,
+                bg=Color.TERTIARY.value,
             ),
