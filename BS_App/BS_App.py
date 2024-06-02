@@ -1,7 +1,6 @@
 import reflex as rx
 from BS_App.style import style
 from BS_App.components.navbar import navbar
-from BS_App.views.header import header
 from BS_App.views.search_bar import search_bar
 from BS_App.views.profile import profile
 
@@ -23,13 +22,11 @@ def card_brawler_info(brawler: dict) -> rx.Component:
                     direction="column",
                     justify="center",
                     align_items="center",
-                    width="100%",
+                width="100%",
                     height="100%",
                 # ),
                 margin=10,
             ),
-
-
 
 def index() -> rx.Component:
     return rx.vstack(

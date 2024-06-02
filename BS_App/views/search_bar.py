@@ -20,6 +20,7 @@ def search_bar() -> rx.Component:
                         name="input",
                         placeholder="Buscar Perfil...",
                         on_blur=State.set_input_value,
+                        bg=Color.WHITE.value,
                         size="md",
                         border_radius="0 10px 10px 0",
                         focus_border_color=Color.PRIMARY.value,

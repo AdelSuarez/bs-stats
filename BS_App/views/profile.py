@@ -5,7 +5,7 @@ from BS_App.components.stats_profile import stats_profile
 from BS_App.style.colors import Color
 from BS_App.style import style
 from BS_App.style.style import Spacing, Size, BOX_SHADOW
-from BS_App.style.colors import Color
+from BS_App.style.colors import Color, TextColor
 
 def profile() -> rx.Component:
     return rx.cond(
@@ -21,7 +21,7 @@ def profile() -> rx.Component:
                             ),
                             rx.chakra.span(
                                 f'{State.player_info["tag"]}',
-                                color=Color.ACCENT.value,
+                                color=TextColor.TERTIARY.value,
                                 font_size=Size.DEFAULT.value,
                             ),
                             spacing=Spacing.ZERO.value
@@ -61,10 +61,6 @@ def profile() -> rx.Component:
                     align_items="center",  # Alinea los elementos horizontalmente al centro
                 ),
 
-
-
-
-                
                 rx.vstack(
                     rx.vstack(
                         rx.heading(f'BRAWLERS', size="4",font_family= "Lilita One",font_weight="300",),
@@ -73,10 +69,8 @@ def profile() -> rx.Component:
                         width="100%", 
                     ),
  
-                    # width="100%",
-                    # height= "350%",
                     bg=Color.WHITE.value,
-                    border_radius="15px",
+                    border_radius=Size.SMALL.value,
                     padding=10,
                     margin=10,
                     box_shadow=BOX_SHADOW,
@@ -87,11 +81,7 @@ def profile() -> rx.Component:
                 height= "100%",
                 direction="column",
                 align="center",
-                # justify="center",
-
-                # bg="red",
                 max_width=style.MAX_WIDTH,
-                # spacing=2,
             ),
             rx.cond(
                 State.message_user_void,
