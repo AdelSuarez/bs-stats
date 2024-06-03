@@ -3,6 +3,7 @@ from enum import Enum
 from .colors import Color
 from .fonts import Font , FontWeight
 
+# usamos el enum para definir los valores de las constantes
 
 # Constants
 MAX_WIDTH = "1200px"

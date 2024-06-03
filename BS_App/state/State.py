@@ -1,6 +1,5 @@
 import reflex as rx
 from typing import Dict, Any
-from BS_App.api.BsApi import BsApi
 from BS_App.api.api import get_brawl_api
 
 
@@ -13,8 +12,6 @@ class State(rx.State):
 
     input_value: str = ''  # Almacena el valor ingresado
     display_value: str = '' # Almacena el valor a mostrar en el heading
-    # is_visible: bool = False # Para mostar los datos
-    # player_info: dict = {} # Guarda toda la informacion obtenida de la api
     message_input:bool = False
     message_user_void:bool = False
     message_error_api:bool = False
@@ -25,7 +22,7 @@ class State(rx.State):
         self.input_value = value
 
     def is_void(self) -> bool:
-
+        # Verifica si el input_value esta vacio
         if len(self.input_value) == 0:
             self.message_input = True
             return False
@@ -35,6 +32,7 @@ class State(rx.State):
 
     async def update_display_value(self):
         if self.is_void():
+            # Obtenemos la información del jugador 
             self.all_info = await get_brawl_api(self.input_value)
             if self.all_info["info"] != {} and self.all_info["info"] != "error_api":
                 self.is_visible = self.all_info["visible"]
