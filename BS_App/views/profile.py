@@ -9,18 +9,18 @@ from BS_App.style.colors import Color, TextColor
 
 def profile() -> rx.Component:
     return rx.cond(
-        State.is_visible,
+        State.info_player.is_visible,
             rx.vstack(
                 rx.vstack(
                     rx.hstack(
                         rx.vstack(
                             rx.avatar(
-                                src=State.url_icon_player, 
+                                src=State.info_player.icon, 
                                 fallback="RX", 
                                 size="8"
                             ),
                             rx.chakra.span(
-                                f'{State.player_info["tag"]}',
+                                f'{State.info_player.tag}',
                                 color=TextColor.TERTIARY.value,
                                 font_size=Size.DEFAULT.value,
                             ),
@@ -28,13 +28,15 @@ def profile() -> rx.Component:
                         ),
                         rx.vstack(
                             rx.text(
-                                f'{State.player_info["name"]}',
+                                f'{State.info_player.name}',
                                 font_size=Size.MEDIUM_BIG.value,
                                 
                             ),
                             rx.vstack(
-                                stats_profile("/trophy.png",f'{State.player_info["trophies"]}'),
-                                stats_profile("/Info.webp", f'EXP: {State.player_info["expLevel"]}'),
+                                stats_profile("/trophy.png",f'{State.info_player.trophies}'),
+                                stats_profile("/Info.webp", f'EXP: {State.info_player.expLevel}'),
+                                stats_profile("/Club.webp", f'{State.info_player.clubName}'),
+
                                 spacing=Spacing.VERY_SMALL.value
                             ),
                             spacing=Spacing.ZERO.value,
@@ -44,10 +46,10 @@ def profile() -> rx.Component:
 
                     rx.flex(
                         
-                        card_stats("MÁXIMO DE TROFEOS", "highestTrophies", "Ranking.webp"),
-                        card_stats("VICTORIAS 3 VS 3", "3vs3Victories", "3v3.png"),
-                        card_stats("VICTORIAS EN SOLITARIO", "soloVictories","Showdown.webp"),
-                        card_stats("VICTORIAS EN DÚO", "duoVictories","Duo-Showdown.webp"),
+                        card_stats("MÁXIMO DE TROFEOS", State.info_player.highestTrophies, "Ranking.webp"),
+                        card_stats("VICTORIAS 3 VS 3", State.info_player.Victories3vs3, "3v3.png"),
+                        card_stats("VICTORIAS EN SOLITARIO", State.info_player.SoloVictories,"Showdown.webp"),
+                        card_stats("VICTORIAS EN DÚO", State.info_player.DuoVictories,"Duo-Showdown.webp"),
 
                         align="center", 
                         justify="center",
@@ -63,7 +65,7 @@ def profile() -> rx.Component:
 
                 rx.vstack(
                     rx.vstack(
-                        rx.heading(f'BRAWLERS', size="4",font_family= "Lilita One",font_weight="300",),
+                        rx.text(f'BRAWLERS'),
                         align="center",
                         height="100%", 
                         width="100%", 

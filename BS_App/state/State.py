@@ -1,20 +1,34 @@
 import reflex as rx
 from typing import Dict, Any
 from BS_App.api.api import get_brawl_api
+from BS_App.model.Player import Player
 
 
 class State(rx.State):
-    all_info: dict = {"visible":False, "info": {}}
+    all_info: dict = {"visible": False, "info": {}}
     is_visible: bool = all_info["visible"]
-    player_info: Dict[str, Any]  = all_info["info"]
-    url_icon_player: str = '' # Icono del jugador
+    player_info: Dict[str, Any] = all_info["info"]
+    url_icon_player: str = ''# Icono del jugador
+    
+    info_player = Player(is_visible=False, 
+                         tag="", 
+                         name="", 
+                         icon="", 
+                         trophies=0, 
+                         highestTrophies=0, 
+                         expLevel=0, 
+                         Victories3vs3=0, 
+                         SoloVictories=0, 
+                         DuoVictories=0, 
+                         clubName=""
+                         )
 
 
     input_value: str = ''  # Almacena el valor ingresado
     display_value: str = '' # Almacena el valor a mostrar en el heading
-    message_input:bool = False
-    message_user_void:bool = False
-    message_error_api:bool = False
+    message_input: bool = False
+    message_user_void: bool = False
+    message_error_api: bool = False
 
 
     def set_input_value(self, value: str):
@@ -29,15 +43,20 @@ class State(rx.State):
         else:
             self.message_input = False
             return True
+        
 
     async def update_display_value(self):
         if self.is_void():
-            # Obtenemos la información del jugador 
-            self.all_info = await get_brawl_api(self.input_value)
-            if self.all_info["info"] != {} and self.all_info["info"] != "error_api":
-                self.is_visible = self.all_info["visible"]
-                self.player_info = self.all_info["info"]
-                self.url_icon_player = self.player_info["icon"]["imageUrl"]
+            self.info_player = await get_brawl_api(self.input_value)
+
+    # async def update_display_value(self):
+    #     if self.is_void():
+    #         # Obtenemos la información del jugador 
+    #         self.all_info = await get_brawl_api(self.input_value)
+    #         if self.all_info["info"] != {} and self.all_info["info"] != "error_api":
+    #             self.is_visible = self.all_info["visible"]
+    #             self.player_info = self.all_info["info"]
+    #             self.url_icon_player = self.player_info["icon"]["imageUrl"]
         # else:
         #     print("")
         # self.is_void()

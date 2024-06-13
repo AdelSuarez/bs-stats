@@ -10,4 +10,4 @@ def stats_profile(image:str, text:str) -> rx.Component:
                     font_size=Size.DEFAULT.value,
                 ),
                 spacing=Spacing.VERY_SMALL.value,
-            ),
+            )

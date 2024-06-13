@@ -1,20 +1,17 @@
 import reflex as rx
 from BS_App.style.style import BOX_SHADOW
+from BS_App.style.style import Size
 
-def message(text: str) -> rx.Component:
+
+
+def message(text: str, color:str) -> rx.Component:
     return rx.box(
-                rx.text(
-                    text, 
-                    size="6",
-                    font_family= "Lilita One",
-                    font_weight="300",
-                ),
-                bg="#E6B0AA",
-                border_radius="10px",
+                rx.text(text),
+                border_radius=Size.SMALL.value,
+                bg=color,
                 width="30%",
                 margin="100px",
                 padding="20px",
                 text_align="center",
                 box_shadow=BOX_SHADOW,
-
             )

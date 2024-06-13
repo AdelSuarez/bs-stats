@@ -1,5 +1,4 @@
 import reflex as rx
-from BS_App.state.State import State
 from BS_App.style.style import Size , Spacing
 from BS_App.style.colors import Color
 
@@ -17,7 +16,7 @@ def card_stats(title:str, data:str, image:str) -> rx.Component:
                             title, 
                             font_size=Size.DEFAULT.value
                         ),
-                        rx.text(State.player_info[data]),
+                        rx.text(data),
                         align_items="center",
                         spacing=Spacing.ZERO.value,
                     ),

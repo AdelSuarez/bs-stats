@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-reflex = "==0.5.2"
+reflex = "==0.5.4"
 aiohttp = "*"
 
 [dev-packages]
