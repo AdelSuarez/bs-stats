@@ -1,7 +1,10 @@
 import reflex as rx
 from typing import Dict, Any
 from BS_App.api.api import get_brawl_api
+from BS_App.model.Brawler import Brawler
 from BS_App.model.Player import Player
+import time
+
 
 
 class State(rx.State):
@@ -20,9 +23,9 @@ class State(rx.State):
                          Victories3vs3=0, 
                          SoloVictories=0, 
                          DuoVictories=0, 
-                         clubName=""
+                         clubName="",
+                         list_brawlers=[]
                          )
-
 
     input_value: str = ''  # Almacena el valor ingresado
     display_value: str = '' # Almacena el valor a mostrar en el heading

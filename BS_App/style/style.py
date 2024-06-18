@@ -6,7 +6,7 @@ from .fonts import Font , FontWeight
 # usamos el enum para definir los valores de las constantes
 
 # Constants
-MAX_WIDTH = "1200px"
+MAX_WIDTH = "1000px"
 BOX_SHADOW = "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
 
 

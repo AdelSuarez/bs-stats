@@ -2,6 +2,7 @@ import reflex as rx
 from BS_App.state.State import State
 from BS_App.components.card_stats import card_stats
 from BS_App.components.stats_profile import stats_profile
+from BS_App.views.brawlers import brawlers
 from BS_App.style.colors import Color
 from BS_App.style import style
 from BS_App.style.style import Spacing, Size, BOX_SHADOW
@@ -19,10 +20,11 @@ def profile() -> rx.Component:
                                 fallback="RX", 
                                 size="8"
                             ),
-                            rx.chakra.span(
+                            rx.text(
                                 f'{State.info_player.tag}',
                                 color=TextColor.TERTIARY.value,
                                 font_size=Size.DEFAULT.value,
+                                as_="span"
                             ),
                             spacing=Spacing.ZERO.value
                         ),
@@ -57,28 +59,14 @@ def profile() -> rx.Component:
 
                     ),
                     bg=Color.WHITE.value,
+                    width="100%",
+                    max_width=style.MAX_WIDTH,
                     border_radius=Size.SMALL.value,
                     padding=Size.SMALL.value,
                     box_shadow=BOX_SHADOW,
                     align_items="center",  # Alinea los elementos horizontalmente al centro
                 ),
-
-                rx.vstack(
-                    rx.vstack(
-                        rx.text(f'BRAWLERS'),
-                        align="center",
-                        height="100%", 
-                        width="100%", 
-                    ),
- 
-                    bg=Color.WHITE.value,
-                    border_radius=Size.SMALL.value,
-                    padding=10,
-                    margin=10,
-                    box_shadow=BOX_SHADOW,
-
-                ),
-
+                brawlers(),
                 width="100%",
                 height= "100%",
                 direction="column",

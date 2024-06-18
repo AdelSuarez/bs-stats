@@ -11,22 +11,6 @@ ivanna = "20CPPGUCR2"
 TOP1="PR9U2JL"
 
 
-def card_brawler_info(brawler: dict) -> rx.Component:
-    return rx.card(
-                # rx.flex(
-                    rx.heading(brawler['name'], size="4"),
-                    # rx.text(f'Power: {brawler["power"]}'),
-                    # rx.text(f'Rank: {brawler["rank"]}'),
-                    # rx.text(f'Trophies: {brawler["trophies"]}'),
-
-                    direction="column",
-                    justify="center",
-                    align_items="center",
-                width="100%",
-                    height="100%",
-                # ),
-                margin=10,
-            ),
 
 def index() -> rx.Component:
     return rx.vstack(

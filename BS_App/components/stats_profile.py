@@ -5,9 +5,10 @@ from BS_App.state.State import State
 def stats_profile(image:str, text:str) -> rx.Component:
     return rx.hstack(
                 rx.image(src=image, width=Size.MEDIUM.value, height=Size.MEDIUM.value),
-                rx.chakra.span(
+                rx.text(
                     text,
                     font_size=Size.DEFAULT.value,
+                    as_="span"
                 ),
                 spacing=Spacing.VERY_SMALL.value,
             )
