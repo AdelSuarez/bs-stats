@@ -3,10 +3,10 @@ from BS_App.state.State import State
 from BS_App.components.card_stats import card_stats
 from BS_App.components.stats_profile import stats_profile
 from BS_App.views.brawlers import brawlers
-from BS_App.style.colors import Color
+from BS_App.views.battlelog import battlelog
 from BS_App.style import style
 from BS_App.style.style import Spacing, Size, BOX_SHADOW
-from BS_App.style.colors import Color, TextColor
+from BS_App.style.colors import TextColor
 
 def profile() -> rx.Component:
     return rx.cond(
@@ -37,7 +37,12 @@ def profile() -> rx.Component:
                             rx.vstack(
                                 stats_profile("/trophy.png",f'{State.info_player.trophies}'),
                                 stats_profile("/Info.webp", f'EXP: {State.info_player.expLevel}'),
-                                stats_profile("/Club.webp", f'{State.info_player.clubName}'),
+
+                                rx.cond(
+                                    State.info_player.clubName != "",
+                                    stats_profile("/Club.webp", f'{State.info_player.clubName}'),
+                                    stats_profile("/NoClub.webp", "Sin Club")
+                                ),
 
                                 spacing=Spacing.VERY_SMALL.value
                             ),
@@ -58,20 +63,15 @@ def profile() -> rx.Component:
                         spacing="2",
 
                     ),
-                    bg=Color.WHITE.value,
-                    width="100%",
-                    max_width=style.MAX_WIDTH,
-                    border_radius=Size.SMALL.value,
-                    padding=Size.SMALL.value,
-                    box_shadow=BOX_SHADOW,
+                    style=style.box_style,
                     align_items="center",  # Alinea los elementos horizontalmente al centro
                 ),
                 brawlers(),
-                width="100%",
-                height= "100%",
-                direction="column",
+                battlelog(),
+                # width="100%",
+                # height= "100%",
                 align="center",
-                max_width=style.MAX_WIDTH,
+                # max_width=style.MAX_WIDTH,
             ),
             rx.cond(
                 State.message_user_void,

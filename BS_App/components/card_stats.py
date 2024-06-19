@@ -9,7 +9,7 @@ def card_stats(title:str, data:str, image:str) -> rx.Component:
                     rx.image(
                         src=f"/{image}", 
                         width="auto", 
-                        height="50px"
+                        height=Size.MEDIUM_BIG.value,
                     ),
                     rx.vstack(
                         rx.text(

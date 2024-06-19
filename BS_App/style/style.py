@@ -14,6 +14,7 @@ BOX_SHADOW = "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.
 class Size(Enum):
     ZERO = "0px !important"
     SMALL = "0.5em"
+    SMALL_MEDIUM = "0.85em"
     DEFAULT = "1em"
     MEDIUM = "1.5em"
     BIG = "2em"
@@ -64,4 +65,14 @@ btn_style = dict(
     _hover={
         "bg":Color.HOVER_BTN
     },
+)
+
+box_style = dict(
+    bg=Color.WHITE.value,
+    width="100%",
+    margin_bottom=Size.SMALL.value,
+    padding=Size.SMALL.value,
+    border_radius=Size.SMALL.value,
+    box_shadow=BOX_SHADOW,
+    max_width=MAX_WIDTH
 )

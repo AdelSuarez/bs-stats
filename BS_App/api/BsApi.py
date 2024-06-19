@@ -5,7 +5,7 @@ from BS_App.model.Brawler import Brawler
 
 class BsApi:
     def __init__(self):
-        self.api_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjJlN2M4OTA4LWViYTUtNDAyYS1hZWQ5LWQ0NzY2MWI3NTdlNSIsImlhdCI6MTcxODY2ODQ4OSwic3ViIjoiZGV2ZWxvcGVyL2FmODJlOTc2LWNmMmYtZDMxMC1iMjFhLWFjZTlhZGJhMTZiNiIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMTM4Ljg0LjQxLjE5MSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.izyXVIGp7f4i-EXw75VB0V4fIXv-oZmsPnOhPUWOv51q_vhd-9X23kIho8BEgSQKYENRa7krrvewT5LXcGFygg"
+        self.api_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjgyZmE0MGU0LTA4ZjMtNDQ3Ni1hYTJhLTYwNTQ2YWNjYzA3NCIsImlhdCI6MTcxODc1Mjk2Niwic3ViIjoiZGV2ZWxvcGVyL2FmODJlOTc2LWNmMmYtZDMxMC1iMjFhLWFjZTlhZGJhMTZiNiIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMTI5LjIyMi4xLjE2OCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.rU91rozECo3yWJKrwKJ4c2gcg_da4UW27lShZb7hB-CKEq4XhFnc5-LwKwDbCdrNNs_QZTLGOoJsO7MQxWR1QA"
 
     async def fetch_info(self, player_tag: str) -> Player:
 
@@ -24,21 +24,14 @@ class BsApi:
 
                     player_info = await response.json()
                     # Todos los iconos de una api de terceros 
-                    # obtenemos los iconos
+                    # obtenemos la informacion
                     icons_players = await self.get_data_brawApi('/icons')
                     info_brawlers = await self.get_data_brawApi('/brawlers')
-                    # Obtenemos la información del icono del jugador
-                    # icon_info = player_info.get('icon')
-                    # print(icon_info)
 
-                    # Verificamos si el icono del jugador es nulo
-                    # if icon_info is not None:
                     for icon in icons_players["player"]:
-                            # Verificamos el icono
+                        # Verificamos el icono
                         if str(player_info["icon"]["id"]) == str(icon):
-                            # Actualizamos la url del icono, con la url del icono de la api de terceros
-                            # icon_info["imageUrl"] = icons["player"][icon]["imageUrl"]
-
+                            # Obtenemos la información de los brawlers
                             self._data_upload(player_info["brawlers"], info_brawlers["list"], list_brawlers)
                             # retornamos la información del jugador
                             return Player(
@@ -52,7 +45,7 @@ class BsApi:
                                     Victories3vs3=player_info['3vs3Victories'], 
                                     SoloVictories=player_info['soloVictories'], 
                                     DuoVictories=player_info['duoVictories'],
-                                    clubName=player_info['club']['name'],
+                                    clubName=player_info['club']['name'] if player_info.get('club', {}) else "",
                                     list_brawlers=list_brawlers
                                 )
 

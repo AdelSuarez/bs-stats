@@ -3,6 +3,7 @@ from BS_App.style import style
 from BS_App.components.navbar import navbar
 from BS_App.views.search_bar import search_bar
 from BS_App.views.profile import profile
+from BS_App.components.footer import footer
 
 # TODO: Si es posible colocar como variable de entorno la api_key
 scott = "CQ9JCL02"
@@ -11,15 +12,16 @@ ivanna = "20CPPGUCR2"
 TOP1="PR9U2JL"
 
 
-
 def index() -> rx.Component:
     return rx.vstack(
             navbar(),
             search_bar(),
             profile(),
+            # footer(),
             align="center",
             height="100vh", 
             width="100vw", 
+
         )   
 
 app = rx.App(
@@ -28,5 +30,5 @@ app = rx.App(
 )
 app.add_page(
     index,
-    title= "BS State"  
+    title="BS State"  
 )
