@@ -1,5 +1,6 @@
 import reflex as rx
 from BS_App.model.Brawler import Brawler
+from BS_App.model.Battlelog import Battlelog
 
 class Player(rx.Base):
     is_visible: bool
@@ -14,3 +15,4 @@ class Player(rx.Base):
     DuoVictories: int
     clubName: str
     list_brawlers: list[Brawler]
+    list_battlelog: list[Battlelog]

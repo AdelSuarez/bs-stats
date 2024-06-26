@@ -8,10 +8,10 @@ import time
 
 
 class State(rx.State):
-    all_info: dict = {"visible": False, "info": {}}
-    is_visible: bool = all_info["visible"]
-    player_info: Dict[str, Any] = all_info["info"]
-    url_icon_player: str = ''# Icono del jugador
+    # all_info: dict = {"visible": False, "info": {}}
+    # is_visible: bool = all_info["visible"]
+    # player_info: Dict[str, Any] = all_info["info"]
+    # url_icon_player: str = ''# Icono del jugador
     
     info_player = Player(is_visible=False, 
                          tag="", 
@@ -24,11 +24,12 @@ class State(rx.State):
                          SoloVictories=0, 
                          DuoVictories=0, 
                          clubName="",
-                         list_brawlers=[]
-                         )
+                         list_brawlers=[],
+                         list_battlelog=[]
+                        )
 
     input_value: str = ''  # Almacena el valor ingresado
-    display_value: str = '' # Almacena el valor a mostrar en el heading
+    # display_value: str = '' # Almacena el valor a mostrar en el heading
     message_input: bool = False
     message_user_void: bool = False
     message_error_api: bool = False
