@@ -3,6 +3,7 @@ import BS_App.constants as constants
 from BS_App.model.Player import Player
 from BS_App.model.Brawler import Brawler
 from BS_App.model.Battlelog import Battlelog
+from BS_App.model.Team import Team
 
 class BsApi:
 
@@ -97,6 +98,7 @@ class BsApi:
                                                         eventMap=battle["event"]["map"],
                                                         eventResult=battle["battle"].get("result", "-"),
                                                         battleType=battle["battle"].get("type", "Tipo de batalla no disponible"),
+                                                        # list_teams=await self._get_teams(battle["battle"]["teams"])
                                                         )
                                              )
                 else:
@@ -121,4 +123,56 @@ class BsApi:
                                                 )
                                             )
         return list_brawlers
+
+
+    # async def _get_teams(self, teams: list[dict]):
+    #     list_teams: list[list[Team]] = []
+    #     brawler_imageUrl = ""
+    #     info_brawlers = await self._get_data_brawApi('/brawlers')
+        
+    #     # Crear un diccionario para mapear ID de brawler a su imagen
+    #     brawler_images = {brawler["id"]: brawler["imageUrl2"] for brawler in info_brawlers["list"]}
+        
+    #     for team in teams:
+    #         list_team: list[Team] = [] 
+    #         for player in team:
+    #             # Usar el diccionario para obtener la imagen directamente
+    #             brawler_imageUrl = brawler_images.get(player["brawler"]["id"], "")
+                
+    #             list_team.append(Team(tag=player["tag"],
+    #                                 name=player["name"],
+    #                                 brawlId=player["brawler"]["id"],
+    #                                 brawlName=player["brawler"]["name"],
+    #                                 brawlPower=player["brawler"]["power"],
+    #                                 brawlTrophies=player["brawler"]["trophies"],
+    #                                 brawlImageUrl=brawler_imageUrl
+    #                                 )
+    #                             )
+    #         list_teams.append(list_team)
+        
+
+
+    async def _get_teams(self, teams: list[dict]) -> list[list[Team]]:
+        info_brawlers = await self._get_data_brawApi('/brawlers')
+        # Crear un diccionario para mapear ID de brawler a su imagen
+        brawler_images = {brawler["id"]: brawler["imageUrl2"] for brawler in info_brawlers["list"]}
+
+        list_teams = [
+            [
+                Team(
+                    tag=player["tag"],
+                    name=player["name"],
+                    brawlId=player["brawler"]["id"],
+                    brawlName=player["brawler"]["name"],
+                    brawlPower=player["brawler"]["power"],
+                    brawlTrophies=player["brawler"]["trophies"],
+                    brawlImageUrl=brawler_images.get(player["brawler"]["id"], "")
+                )
+                for player in team
+            ]
+            for team in teams
+        ]
+
+        return list_teams
+                
     

@@ -2,9 +2,11 @@ import reflex as rx
 from BS_App.state.State import State
 from BS_App.components.card_stats import card_stats
 from BS_App.components.stats_profile import stats_profile
+from BS_App.components.button import button
 from BS_App.views.brawlers import brawlers
-from BS_App.views.battlelog import battlelog
+from BS_App.views.battlelog_view import battlelog_view
 from BS_App.style import style
+from BS_App import constants
 from BS_App.style.style import Spacing, Size, BOX_SHADOW
 from BS_App.style.colors import TextColor
 
@@ -66,12 +68,21 @@ def profile() -> rx.Component:
                     style=style.box_style,
                     align_items="center",  # Alinea los elementos horizontalmente al centro
                 ),
-                brawlers(),
-                battlelog(),
-                # width="100%",
-                # height= "100%",
+
+                rx.hstack(
+                    button(constants.BTN_BRAWLER),
+                    button(constants.BTN_BATTLELOG),
+                ),
+
+                rx.cond(
+                    State.current_container == constants.BTN_BRAWLER,
+                    brawlers(),
+                    rx.cond(
+                        State.current_container == constants.BTN_BATTLELOG,
+                        battlelog_view(),
+                    ),
+                ),
                 align="center",
-                # max_width=style.MAX_WIDTH,
             ),
             rx.cond(
                 State.message_user_void,

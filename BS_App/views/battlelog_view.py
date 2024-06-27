@@ -4,7 +4,7 @@ from BS_App.style import style
 from BS_App.style.style import Size
 from BS_App.components.battle_card import battle_card
 
-def battlelog() -> rx.Component:
+def battlelog_view() -> rx.Component:
     return rx.vstack(
         rx.text(
                 "Battle Log",
@@ -14,7 +14,10 @@ def battlelog() -> rx.Component:
             State.info_player.list_battlelog,
             battle_card
         ),
-        style=style.box_style,
+
         align="center",
         justify="center",
+        
+        style=style.box_style,
+        width="1000px",
     )

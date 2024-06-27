@@ -70,9 +70,9 @@ btn_style = dict(
 box_style = dict(
     bg=Color.WHITE.value,
     width="100%",
+    max_width=MAX_WIDTH,
     margin_bottom=Size.SMALL.value,
     padding=Size.SMALL.value,
     border_radius=Size.SMALL.value,
-    box_shadow=BOX_SHADOW,
-    max_width=MAX_WIDTH
+    box_shadow=BOX_SHADOW
 )

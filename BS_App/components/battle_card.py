@@ -2,11 +2,13 @@ import reflex as rx
 from BS_App.model.Battlelog import Battlelog
 from BS_App.style import style
 from BS_App.style.colors import Color
+from BS_App.style.style import Size
+
 
 
 
 def battle_card(battlelog: Battlelog) -> rx.Component:
-    return rx.hstack(
+    return rx.vstack(
         rx.flex(
             rx.vstack(
                 rx.text(battlelog.eventMode),
@@ -19,6 +21,19 @@ def battle_card(battlelog: Battlelog) -> rx.Component:
             justify="between",
             align="center",
         ),
+
+        # rx.foreach(
+        #     battlelog.list_teams,
+        #     lambda team: rx.flex(
+        #         rx.foreach(
+        #             team,
+        #             lambda player: rx.text(player.name),
+        #         ),
+        #         justify="center",
+        #         align="center",
+        #         spacing=style.Spacing.ZERO.value,
+        #     ),
+        # ),
 
         # justify="center",
         # align_items="center",
