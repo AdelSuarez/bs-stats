@@ -6,5 +6,5 @@ class Battlelog(rx.Base):
     eventMap: str
     eventResult: str
     battleType: str
-    # list_teams: list[list[Team]]
+    list_teams: list[list[Team]]
     

@@ -11,7 +11,7 @@ def battlelog_view() -> rx.Component:
                 font_size=Size.MEDIUM.value
             ),
         rx.foreach(
-            State.info_player.list_battlelog,
+            State.info_player_battlelog,
             battle_card
         ),
 

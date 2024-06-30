@@ -25,10 +25,8 @@ class BsApi:
 
                     player_info = await response.json()
                     # Todos los iconos de una api de terceros 
-                    icons_players = await self._get_data_brawApi('/icons')
-                    info_brawlers = await self._get_data_brawApi('/brawlers')
-
-                    await self._get_battlelog(player_tag)
+                    icons_players = await self.__get_data_brawApi('/icons')
+                    info_brawlers = await self.__get_data_brawApi('/brawlers')
 
 
                     for icon in icons_players["player"]:
@@ -49,8 +47,7 @@ class BsApi:
                                     SoloVictories=player_info['soloVictories'], 
                                     DuoVictories=player_info['duoVictories'],
                                     clubName=player_info['club']['name'] if player_info.get('club', {}) else "",
-                                    list_brawlers=self._data_upload(player_info["brawlers"], info_brawlers["list"]),
-                                    list_battlelog=await self._get_battlelog(player_tag)
+                                    list_brawlers=self.__data_upload(player_info["brawlers"], info_brawlers["list"]),
                                 )
 
                 # Verificamos si el jugador no fue encontrado
@@ -66,22 +63,9 @@ class BsApi:
                     print(f"Error HTTP: {response.status}")
 
 
-
-    async def _get_data_brawApi(self, endpoint: str) -> dict:
-        # Realizamos la petición a la API para obtener los íconos
-        async with aiohttp.ClientSession() as session:
-            async with session.get(constants.BASE_URL_BRAWLAPI + endpoint) as response:
-                if response.status == 200:
-                    return await response.json()
-                else:
-                    print(f"Error al obtener datos. Código de estado: {response.status}")
-
-
-
-
-    async def _get_battlelog(self, player_tag: str) -> list[Battlelog]:
+    async def get_battlelog(self, player_tag: str) -> list[Battlelog]:
         url = f"{constants.BASE_URL_BSAPI}{player_tag}/battlelog"
-
+        count: int = 0
         headers = {
             "Accept": "application/json",
             "Authorization": f"Bearer {constants.API_KEY}"
@@ -94,22 +78,34 @@ class BsApi:
                 if response.status == 200:
                     info = await response.json()
                     for battle in info["items"]:
+                        if count == 8:
+                            break
                         list_battlelog.append(Battlelog(eventMode=battle["event"]["mode"],
                                                         eventMap=battle["event"]["map"],
                                                         eventResult=battle["battle"].get("result", "-"),
                                                         battleType=battle["battle"].get("type", "Tipo de batalla no disponible"),
-                                                        # list_teams=await self._get_teams(battle["battle"]["teams"])
+                                                        list_teams=await self.__get_teams(battle["battle"]["teams"])
                                                         )
-                                             )
+                                                    )
+                        count += 1
                 else:
                     print(f"Error al obtener datos. Código de estado: {response.status}")
         
         return list_battlelog 
 
 
+    async def __get_data_brawApi(self, endpoint: str) -> dict:
+        # Realizamos la petición a la API para obtener los íconos
+        async with aiohttp.ClientSession() as session:
+            async with session.get(constants.BASE_URL_BRAWLAPI + endpoint) as response:
+                if response.status == 200:
+                    return await response.json()
+                else:
+                    print(f"Error al obtener datos. Código de estado: {response.status}")
 
 
-    def _data_upload(self,list_player:dict, list_brawlApi: dict) -> list[Brawler]:
+
+    def __data_upload(self,list_player:dict, list_brawlApi: dict) -> list[Brawler]:
         list_brawlers: list[Brawler] = []
 
         for brawler in list_player:
@@ -152,8 +148,8 @@ class BsApi:
         
 
 
-    async def _get_teams(self, teams: list[dict]) -> list[list[Team]]:
-        info_brawlers = await self._get_data_brawApi('/brawlers')
+    async def __get_teams(self, teams: list[dict]) -> list[list[Team]]:
+        info_brawlers = await self.__get_data_brawApi('/brawlers')
         # Crear un diccionario para mapear ID de brawler a su imagen
         brawler_images = {brawler["id"]: brawler["imageUrl2"] for brawler in info_brawlers["list"]}
 

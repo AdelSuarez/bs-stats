@@ -6,6 +6,7 @@ def button(type: str):
     return rx.button(
         type,
         on_click=State.container_change(type),
+        size="3",
         bg=rx.cond(
             State.current_container == type,
             Color.HOVER_BTN.value,

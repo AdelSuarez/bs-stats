@@ -46,6 +46,7 @@ def search_bar() -> rx.Component:
             rx.button(
                 "Buscar",
                 on_click=State.update_display_value,
+                loading=State.loading,
                 size="3",
                 style=btn_style,
             ),

@@ -1,29 +1,31 @@
 import reflex as rx
-from BS_App.api.api import get_brawl_api
+from BS_App.api.api import get_brawl_api, get_battlelog
 from BS_App import constants
 from BS_App.model.Player import Player
+from BS_App.model.Battlelog import Battlelog
 
 
 
 class State(rx.State):
 
-
+    is_loading_search: bool = False
     current_container: str = constants.BTN_BRAWLER
     
-    info_player = Player(is_visible=False, 
-                         tag="", 
-                         name="", 
-                         icon="", 
-                         trophies=0, 
-                         highestTrophies=0, 
-                         expLevel=0, 
-                         Victories3vs3=0, 
-                         SoloVictories=0, 
-                         DuoVictories=0, 
-                         clubName="",
-                         list_brawlers=[],
-                         list_battlelog=[]
-                        )
+    info_player_battlelog: list[Battlelog]= []
+
+    info_player: Player = Player(is_visible=False, 
+                                tag="", 
+                                name="", 
+                                icon="", 
+                                trophies=0, 
+                                highestTrophies=0, 
+                                expLevel=0, 
+                                Victories3vs3=0, 
+                                SoloVictories=0, 
+                                DuoVictories=0, 
+                                clubName="",
+                                list_brawlers=[],
+                            )
 
     input_value: str = ''  # Almacena el valor ingresado
     # display_value: str = '' # Almacena el valor a mostrar en el heading
@@ -31,6 +33,9 @@ class State(rx.State):
     message_user_void: bool = False
     message_error_api: bool = False
 
+    @rx.var
+    def loading(self) -> bool:
+        return self.is_loading_search
 
     def set_input_value(self, value: str):
         # Este método actualiza input_value cada vez que el usuario escribe en el input
@@ -48,10 +53,27 @@ class State(rx.State):
 
     async def update_display_value(self):
         if self.is_void():
+            self.is_loading_search = True
+            yield
             self.info_player = await get_brawl_api(self.input_value)
+            self.is_loading_search = False
+            yield
+            
 
-    def container_change(self, container: str):
+    async def update_display_value_battlelog(self):
+        self.info_player_battlelog = await get_battlelog(self.input_value)
+        
+
+    async def container_change(self, container: str):
         self.current_container = container
+
+        if self.info_player_battlelog == []:
+            if container == constants.BTN_BATTLELOG:
+                # self.is_loading = True
+                # yield
+                await self.update_display_value_battlelog()
+                # self.is_loading = False
+                # yield
 
         
 
