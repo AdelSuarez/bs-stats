@@ -1,7 +1,7 @@
 import reflex as rx
 from enum import Enum
 from .colors import Color
-from .fonts import Font , FontWeight
+from .fonts import Font, FontWeight
 
 # usamos el enum para definir los valores de las constantes
 
@@ -22,10 +22,12 @@ class Size(Enum):
     VERY_BIG = "16em"
 
 # Spacing
+
+
 class Spacing(Enum):
     ZERO = "0"
     VERY_SMALL = "1"
-    MEDIUM_SMALL= "2"
+    MEDIUM_SMALL = "2"
     SMALL = "3"
     DEFAULT = "4"
     LARGE = "5"
@@ -33,6 +35,7 @@ class Spacing(Enum):
     BIG = "7"
     MEDIUM_BIG = "8"
     VERY_BIG = "9"
+
 
 # Styles
 STYLESHEETS = [
@@ -47,7 +50,7 @@ BASE_STYLE = {
     },
     rx.button: {
         "font_family": Font.DEFAULT.value,
-        "cursor":"pointer",
+        "cursor": "pointer",
     },
     rx.text: {
         "font_family": Font.DEFAULT.value,
@@ -63,7 +66,7 @@ form_helper_style = dict(
 btn_style = dict(
     bg=Color.PRIMARY.value,
     _hover={
-        "bg":Color.HOVER_BTN
+        "bg": Color.HOVER_BTN
     },
 )
 

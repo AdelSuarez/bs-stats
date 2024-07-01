@@ -2,6 +2,7 @@ import reflex as rx
 from BS_App.state.State import State
 from BS_App.style.colors import Color
 
+
 def button(type: str):
     return rx.button(
         type,

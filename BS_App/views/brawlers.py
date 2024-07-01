@@ -7,22 +7,22 @@ from BS_App.style.style import Size
 
 def brawlers() -> rx.Component:
     return rx.vstack(
-                rx.text(
-                        'BRAWLERS',
-                        font_size=Size.MEDIUM.value
-                    ),
+        rx.text(
+            'BRAWLERS',
+            font_size=Size.MEDIUM.value
+        ),
 
-                rx.flex(
-                    rx.foreach(
-                        State.info_player.list_brawlers,
-                        brawler_card
-                    ),
-                    spacing = "3",
-                    flex_wrap="wrap",
-                    align="center",
-                    justify="center",
-                ),
-                align="center",
-                justify="center",
-                style=style.box_style
-            )
+        rx.flex(
+            rx.foreach(
+                State.info_player.list_brawlers,
+                brawler_card
+            ),
+            spacing="3",
+            flex_wrap="wrap",
+            align="center",
+            justify="center",
+        ),
+        align="center",
+        justify="center",
+        style=style.box_style
+    )

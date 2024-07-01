@@ -8,19 +8,20 @@ from BS_App.views.profile import profile
 scott = "CQ9JCL02"
 adel = "V2Y98VYQ"
 ivanna = "20CPPGUCR2"
-TOP1="PR9U2JL"
+TOP1 = "PR9U2JL"
 
 
 def index() -> rx.Component:
     return rx.vstack(
-            navbar(),
-            search_bar(),
-            profile(),
-            align="center",
-            height="100vh", 
-            width="100vw", 
+        navbar(),
+        search_bar(),
+        profile(),
+        align="center",
+        height="100vh",
+        width="100vw",
 
-        )   
+    )
+
 
 app = rx.App(
     stylesheets=style.STYLESHEETS,
@@ -28,5 +29,5 @@ app = rx.App(
 )
 app.add_page(
     index,
-    title="BS State"  
+    title="BS State"
 )

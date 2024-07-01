@@ -5,27 +5,26 @@ from BS_App.model.Player import Player
 from BS_App.model.Battlelog import Battlelog
 
 
-
 class State(rx.State):
 
     is_loading_search: bool = False
     current_container: str = constants.BTN_BRAWLER
-    
-    info_player_battlelog: list[Battlelog]= []
 
-    info_player: Player = Player(is_visible=False, 
-                                tag="", 
-                                name="", 
-                                icon="", 
-                                trophies=0, 
-                                highestTrophies=0, 
-                                expLevel=0, 
-                                Victories3vs3=0, 
-                                SoloVictories=0, 
-                                DuoVictories=0, 
-                                clubName="",
-                                list_brawlers=[],
-                            )
+    info_player_battlelog: list[Battlelog] = []
+
+    info_player: Player = Player(is_visible=False,
+                                 tag="",
+                                 name="",
+                                 icon="",
+                                 trophies=0,
+                                 highestTrophies=0,
+                                 expLevel=0,
+                                 Victories3vs3=0,
+                                 SoloVictories=0,
+                                 DuoVictories=0,
+                                 clubName="",
+                                 list_brawlers=[],
+                                 )
 
     input_value: str = ''  # Almacena el valor ingresado
     # display_value: str = '' # Almacena el valor a mostrar en el heading
@@ -49,7 +48,6 @@ class State(rx.State):
         else:
             self.message_input = False
             return True
-        
 
     async def update_display_value(self):
         if self.is_void():
@@ -58,11 +56,9 @@ class State(rx.State):
             self.info_player = await get_brawl_api(self.input_value)
             self.is_loading_search = False
             yield
-            
 
     async def update_display_value_battlelog(self):
         self.info_player_battlelog = await get_battlelog(self.input_value)
-        
 
     async def container_change(self, container: str):
         self.current_container = container
@@ -74,8 +70,3 @@ class State(rx.State):
                 await self.update_display_value_battlelog()
                 # self.is_loading = False
                 # yield
-
-        
-
- 
-

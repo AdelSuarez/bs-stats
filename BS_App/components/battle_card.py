@@ -3,6 +3,7 @@ from BS_App.model.Battlelog import Battlelog
 from BS_App.style import style
 from BS_App.style.colors import Color
 
+
 def battle_card(battlelog: Battlelog) -> rx.Component:
     return rx.vstack(
         rx.flex(
@@ -30,7 +31,7 @@ def battle_card(battlelog: Battlelog) -> rx.Component:
                 spacing=style.Spacing.ZERO.value,
             ),
         ),
-        
+
         style=style.box_style,
         bg=Color.TERTIARY.value,
     )
