@@ -35,7 +35,6 @@ class BsApi:
 
                             # retornamos la información del jugador
                             return Player(
-                                is_visible=True,
                                 tag=player_info['tag'],
                                 name=player_info['name'],
                                 icon=icons_players["player"][icon]["imageUrl"],
@@ -113,6 +112,8 @@ class BsApi:
             for brawler_data in list_brawlApi:
                 if brawler["id"] == brawler_data["id"]:
                     list_brawlers.append(Brawler(name=brawler["name"],
+                                                 power=brawler["power"],
+                                                 trophies=brawler["trophies"],
                                                  imageUrl=brawler_data["imageUrl2"],
                                                  rarity=brawler_data["rarity"]["name"],
                                                  rarityColor=brawler_data["rarity"]["color"],

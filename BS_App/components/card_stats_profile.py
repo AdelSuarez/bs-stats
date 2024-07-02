@@ -3,7 +3,7 @@ from BS_App.style.style import Size, Spacing
 from BS_App.style.colors import Color
 
 
-def card_stats(title: str, data: str, image: str) -> rx.Component:
+def card_stats_profile(title: str, data: str, image: str) -> rx.Component:
     return rx.box(
         rx.hstack(
             rx.image(

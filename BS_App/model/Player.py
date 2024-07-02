@@ -3,7 +3,6 @@ from BS_App.model.Brawler import Brawler
 
 
 class Player(rx.Base):
-    is_visible: bool
     tag: str
     name: str
     icon: str

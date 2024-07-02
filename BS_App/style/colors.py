@@ -8,6 +8,7 @@ class Color(Enum):
     TERTIARY = "#D0ECE7"
     WHITE = "#FFFFFF"
     BG = "#F4F3F3"
+    BG_STATS = " #424949 "
     HOVER_BTN = "#16a085"
     MESSAGE_ERROR = "#e74c3c"
 

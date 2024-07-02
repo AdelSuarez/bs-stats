@@ -1,20 +1,21 @@
 import reflex as rx
 import BS_App.model.Brawler as Brawler
-from BS_App.style.style import Size
+from BS_App.style.style import Size, Spacing
+from BS_App.components.brawler_card_data import brawler_card_data
 
 
 def brawler_card(brawler: Brawler) -> rx.Component:
     return rx.box(
-        rx.image(
-            src=brawler.imageUrl,
-            width="100px",
-            height="100px",
-            border_radius=Size.SMALL.value,
-
+        brawler_card_data(
+            brawler.trophies,
+            brawler.imageUrl,
+            brawler.power
         ),
+
         rx.text(
             brawler.name,
-            font_size=Size.SMALL_MEDIUM.value
+            font_size=Size.SMALL_MEDIUM.value,
+            as_="span"
         ),
         bg=brawler.rarityColor,
         padding=Size.SMALL.value,

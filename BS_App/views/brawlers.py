@@ -17,7 +17,7 @@ def brawlers() -> rx.Component:
                 State.info_player.list_brawlers,
                 brawler_card
             ),
-            spacing="3",
+            spacing="5",
             flex_wrap="wrap",
             align="center",
             justify="center",

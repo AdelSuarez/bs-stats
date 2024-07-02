@@ -2,7 +2,7 @@ import reflex as rx
 from BS_App.style.style import Size, Spacing
 
 
-def stats_profile(image: str, text: str) -> rx.Component:
+def card_data_profile(image: str, text: str) -> rx.Component:
     return rx.hstack(
         rx.image(
             src=image,

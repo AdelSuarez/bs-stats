@@ -70,6 +70,16 @@ btn_style = dict(
     },
 )
 
+text_data_brawler_style = dict(
+    position="absolute",
+    z_index="1",
+    padding_x=Size.SMALL.value,
+    bg=Color.BG_STATS.value,
+    color=Color.WHITE.value,
+
+)
+
+
 box_style = dict(
     bg=Color.WHITE.value,
     width="100%",

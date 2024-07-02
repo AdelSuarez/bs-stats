@@ -11,9 +11,14 @@ def battlelog_view() -> rx.Component:
             "Battle Log",
             font_size=Size.MEDIUM.value
         ),
-        rx.foreach(
-            State.info_player_battlelog,
-            battle_card
+        rx.cond(
+            State.loading_battlelog,
+            rx.foreach(
+                State.info_player_battlelog,
+                battle_card
+            ),
+            rx.spinner(size="3"),
+
         ),
 
         align="center",

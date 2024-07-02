@@ -12,5 +12,6 @@ def button(type: str):
             State.current_container == type,
             Color.HOVER_BTN.value,
             Color.PRIMARY.value
-        )
+        ),
+        # loading=State.is_loading_button,
     )
