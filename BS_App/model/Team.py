@@ -3,6 +3,7 @@ from typing import Optional
 
 
 class Team(rx.Base):
+    starPlayer: bool
     tag: str
     name: str
     brawlId: str

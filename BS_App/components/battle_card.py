@@ -1,6 +1,6 @@
 import reflex as rx
 from BS_App.model.Battlelog import Battlelog
-from BS_App.style.style import Size, box_style, Spacing
+from BS_App.style.style import Size, box_style, Spacing, flex_card_brawler_style
 from BS_App.style.colors import Color
 from BS_App.components.battle_card_player import battle_card_player
 
@@ -21,20 +21,25 @@ def battle_card(battlelog: Battlelog) -> rx.Component:
         ),
 
         rx.flex(
-            rx.hstack(
+            rx.flex(
                 rx.foreach(
                     battlelog.list_teams[0],
                     lambda player: battle_card_player(player),
 
                 ),
+                **flex_card_brawler_style,
             ),
-            rx.heading("vs"),
-            rx.hstack(
+            rx.heading(
+                "vs",
+                margin_x=Size.BIG.value
+            ),
+            rx.flex(
                 rx.foreach(
                     battlelog.list_teams[1],
                     lambda player: battle_card_player(player),
 
                 ),
+                **flex_card_brawler_style,
             ),
             width="100%",
             justify="between",
@@ -43,5 +48,5 @@ def battle_card(battlelog: Battlelog) -> rx.Component:
         padding=Size.DEFAULT.value,
 
         style=box_style,
-        bg=Color.TERTIARY.value,
+        bg="#eaeded",
     )

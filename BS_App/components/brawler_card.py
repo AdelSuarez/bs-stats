@@ -1,6 +1,6 @@
 import reflex as rx
 import BS_App.model.Brawler as Brawler
-from BS_App.style.style import Size, Spacing
+from BS_App.style.style import Size
 from BS_App.components.brawler_card_data import brawler_card_data
 
 
@@ -15,13 +15,14 @@ def brawler_card(brawler: Brawler) -> rx.Component:
         rx.text(
             brawler.name,
             font_size=Size.SMALL_MEDIUM.value,
-            as_="span"
+            padding_x=Size.VERY_SMALL.value,
+            as_="span",
         ),
         bg=brawler.rarityColor,
-        padding=Size.SMALL.value,
+        padding=Size.VERY_SMALL.value,
         border_radius=Size.SMALL.value,
         width="auto",
         height="auto",
-        aling="center",
+
 
     )

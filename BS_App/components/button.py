@@ -13,5 +13,4 @@ def button(type: str):
             Color.HOVER_BTN.value,
             Color.PRIMARY.value
         ),
-        # loading=State.is_loading_button,
     )

@@ -31,10 +31,9 @@ class State(rx.State):
     is_visible_profile: bool = False
 
     input_value: str = ''  # Almacena el valor ingresado
-    # display_value: str = '' # Almacena el valor a mostrar en el heading
     message_input: bool = False
-    message_user_void: bool = False
-    message_error_api: bool = False
+    success: bool = True
+    error_message: str = ""
 
     @rx.var
     def loading(self) -> bool:
@@ -48,7 +47,7 @@ class State(rx.State):
         # Este método actualiza input_value cada vez que el usuario escribe en el input
         self.input_value = value
 
-    def is_void(self) -> bool:
+    def __is_void(self) -> bool:
         # Verifica si el input_value esta vacio
         if len(self.input_value) == 0:
             self.message_input = True
@@ -57,21 +56,28 @@ class State(rx.State):
             self.message_input = False
             return True
 
-    async def update_display_value(self):
+    def __variable_reset(self):
         self.info_player_battlelog = []
         self.current_container: str = constants.BTN_BRAWLER
         self.is_visible_profile = False
         self.is_loading_search = False
         self.is_loading_battlelog = False
+        self.success = True
 
+    async def update_display_value(self):
+        self.__variable_reset()
         yield
-        if self.is_void():
+        if self.__is_void():
             self.is_loading_search = True
             yield
-            self.info_player = await get_brawl_api(self.input_value)
 
-            if self.info_player:
+            result = await get_brawl_api(self.input_value)
+            if isinstance(result, Player):
+                self.info_player = result
                 self.is_visible_profile = True
+            else:
+                self.success = result["success"]
+                self.error_message = result["error"]
 
             self.is_loading_search = False
             yield

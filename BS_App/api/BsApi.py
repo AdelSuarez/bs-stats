@@ -4,11 +4,12 @@ from BS_App.model.Player import Player
 from BS_App.model.Brawler import Brawler
 from BS_App.model.Battlelog import Battlelog
 from BS_App.model.Team import Team
+from typing import Union
 
 
 class BsApi:
 
-    async def fetch_info(self, player_tag: str) -> Player:
+    async def fetch_info(self, player_tag: str) -> Union[Player, dict]:
 
         # Toda la informacion para conectarse a la API
         url = f"{constants.BASE_URL_BSAPI}{player_tag}"
@@ -47,20 +48,22 @@ class BsApi:
                                 clubName=player_info['club']['name'] if player_info.get(
                                     'club', {}) else "",
                                 list_brawlers=self.__data_upload(
-                                    player_info["brawlers"], info_brawlers["list"]),
+                                    player_info["brawlers"],
+                                    info_brawlers["list"]
+                                ),
                             )
 
                 # Verificamos si el jugador no fue encontrado
                 elif response.status == 404:
-                    print("Jugador no encontrado")
-                    return {"visible": False, "info": {}, "error": "void"}
+                    return {"success": False, "error": "Jugador no encontrado"}
+
                 elif response.status == 403:
                     # Error de autenticación con la api
-                    print("Error de autenticación")
-                    return {"visible": False, "info": {}, "error": "api"}
+                    return {"success": False, "error": "Error de autenticación con la API"}
 
                 else:
                     print(f"Error HTTP: {response.status}")
+                    return {"success": False, "error": f"Error HTTP no manejado: {response.status}"}
 
     async def get_battlelog(self, player_tag: str) -> list[Battlelog]:
         url = f"{constants.BASE_URL_BSAPI}{player_tag}/battlelog"
@@ -85,7 +88,7 @@ class BsApi:
                                                             "result", "-"),
                                                         battleType=battle["battle"].get(
                                                             "type", "Tipo de batalla no disponible"),
-                                                        list_teams=await self.__get_teams(battle["battle"]["teams"])
+                                                        list_teams=await self.__get_teams(battle["battle"]["teams"], battle["battle"]["starPlayer"].get("name", ""))
                                                         )
                                               )
                         count += 1
@@ -122,32 +125,7 @@ class BsApi:
                                          )
         return list_brawlers
 
-    # async def _get_teams(self, teams: list[dict]):
-    #     list_teams: list[list[Team]] = []
-    #     brawler_imageUrl = ""
-    #     info_brawlers = await self._get_data_brawApi('/brawlers')
-
-    #     # Crear un diccionario para mapear ID de brawler a su imagen
-    #     brawler_images = {brawler["id"]: brawler["imageUrl2"] for brawler in info_brawlers["list"]}
-
-    #     for team in teams:
-    #         list_team: list[Team] = []
-    #         for player in team:
-    #             # Usar el diccionario para obtener la imagen directamente
-    #             brawler_imageUrl = brawler_images.get(player["brawler"]["id"], "")
-
-    #             list_team.append(Team(tag=player["tag"],
-    #                                 name=player["name"],
-    #                                 brawlId=player["brawler"]["id"],
-    #                                 brawlName=player["brawler"]["name"],
-    #                                 brawlPower=player["brawler"]["power"],
-    #                                 brawlTrophies=player["brawler"]["trophies"],
-    #                                 brawlImageUrl=brawler_imageUrl
-    #                                 )
-    #                             )
-    #         list_teams.append(list_team)
-
-    async def __get_teams(self, teams: list[dict]) -> list[list[Team]]:
+    async def __get_teams(self, teams: list[dict], star_player: str) -> list[list[Team]]:
         info_brawlers = await self.__get_data_brawApi('/brawlers')
         # Crear un diccionario para mapear ID de brawler a su imagen
         brawler_images = {brawler["id"]: brawler["imageUrl2"]
@@ -156,6 +134,7 @@ class BsApi:
         list_teams = [
             [
                 Team(
+                    starPlayer=True if star_player == player["name"] else False,
                     tag=player["tag"],
                     name=player["name"],
                     brawlId=player["brawler"]["id"],

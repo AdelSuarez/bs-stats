@@ -13,6 +13,7 @@ BOX_SHADOW = "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.
 # Size
 class Size(Enum):
     ZERO = "0px !important"
+    VERY_SMALL = "0.3rem"
     SMALL = "0.5em"
     SMALL_MEDIUM = "0.85em"
     DEFAULT = "1em"
@@ -75,7 +76,7 @@ text_data_brawler_style = dict(
     z_index="1",
     padding_x=Size.SMALL.value,
     bg=Color.BG_STATS.value,
-    color=Color.WHITE.value,
+    color=Color.WHITE.value
 
 )
 
@@ -88,4 +89,11 @@ box_style = dict(
     padding=Size.SMALL.value,
     border_radius=Size.SMALL.value,
     box_shadow=BOX_SHADOW
+)
+
+flex_card_brawler_style = dict(
+    spacing=Spacing.SMALL.value,
+    flex_wrap="wrap",
+    justify="center",
+    align="center"
 )

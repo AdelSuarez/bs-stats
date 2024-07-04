@@ -6,16 +6,23 @@ from BS_App.components.brawler_card_data import brawler_card_data
 
 def battle_card_player(player: Team) -> rx.Component:
     return rx.vstack(
+        rx.cond(
+            player.starPlayer,
+            rx.text(
+                "STAR PLAYER",
+                # color="#f4d03f",
+                as_="span"
+            ),
+            rx.text(
+                "-",
+                as_="span"
+            ),
+        ),
         brawler_card_data(
             player.brawlTrophies,
             player.brawlImageUrl,
             player.brawlPower,
         ),
-        # rx.image(
-        #     src=player.brawlImageUrl,
-        #     width="100px",
-        #     height="100px",
-        # ),
         rx.text(
             player.name,
             as_="span"
